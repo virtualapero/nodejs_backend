@@ -1,8 +1,8 @@
 const query = require('../db/db-connection');
 const { multipleColumnSet } = require('../utils/common.utils');
-const Role = require('../utils/userRoles.utils');
-class UserModel {
-    tableName = 'user';
+
+class AperoModel {
+    tableName = 'apero';
 
     find = async (params = {}) => {
         let sql = `SELECT * FROM ${this.tableName}`;
@@ -29,11 +29,11 @@ class UserModel {
         return result[0];
     }
 
-    create = async ({ username, password, twitter_handle, image, role = Role.SuperUser }) => {
+    create = async ({ apero_date }) => {
         const sql = `INSERT INTO ${this.tableName}
-        (username, password, twitter_handle, image, role) VALUES (?,?,?,?,?)`;
+        (apero_date) VALUES (?)`;
 
-        const result = await query(sql, [username, password, twitter_handle, image, role]);
+        const result = await query(sql, [apero_date]);
         const affectedRows = result ? result.affectedRows : 0;
 
         return affectedRows;
@@ -59,4 +59,4 @@ class UserModel {
     }
 }
 
-module.exports = new UserModel;
+module.exports = new AperoModel;

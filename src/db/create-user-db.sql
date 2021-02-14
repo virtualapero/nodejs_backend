@@ -12,4 +12,10 @@ CREATE TABLE IF NOT EXISTS user
     twitter_handle VARCHAR(50) NOT NULL, 
     image          VARCHAR(50) NOT NULL, 
     role       ENUM('Admin', 'SuperUser') DEFAULT 'SuperUser', 
+);
+
+CREATE TABLE IF NOT EXISTS apero 
+( 
+    id             INT PRIMARY KEY auto_increment, 
+    apero_date     DATE UNIQUE NOT NULL
 ); 
