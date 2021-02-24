@@ -17,5 +17,5 @@ CREATE TABLE IF NOT EXISTS user
 CREATE TABLE IF NOT EXISTS apero 
 ( 
     id             INT PRIMARY KEY auto_increment, 
-    apero_date     DATE UNIQUE NOT NULL
+    apero_date     INT(11) UNIQUE NOT NULL
 ); 

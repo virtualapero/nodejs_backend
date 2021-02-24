@@ -1,10 +1,12 @@
 const query = require('../db/db-connection');
 const { multipleColumnSet } = require('../utils/common.utils');
+const { multipleTsColumnSet } = require('../utils/unixts.utils');
 
 class AperoModel {
     tableName = 'apero';
 
     find = async (params = {}) => {
+        
         let sql = `SELECT * FROM ${this.tableName}`;
 
         if (!Object.keys(params).length) {
@@ -31,7 +33,7 @@ class AperoModel {
 
     create = async ({ apero_date }) => {
         const sql = `INSERT INTO ${this.tableName}
-        (apero_date) VALUES (?)`;
+        (apero_date) VALUES (UNIX_TIMESTAMP(?))`;
 
         const result = await query(sql, [apero_date]);
         const affectedRows = result ? result.affectedRows : 0;
@@ -40,9 +42,11 @@ class AperoModel {
     }
 
     update = async (params, id) => {
-        const { columnSet, values } = multipleColumnSet(params)
+        const { columnSet, values } = multipleTsColumnSet(params);
 
         const sql = `UPDATE ${this.tableName} SET ${columnSet} WHERE id = ?`;
+
+        console.log(sql);
 
         const result = await query(sql, [...values, id]);
 

@@ -28,6 +28,15 @@ class AperoController {
         res.send(apero);
     };
 
+    getAperoByDate = async (req, res, next) => {
+        const apero = await AperoModel.findOne({ apero_date: req.params.aperodate });
+        if (!apero) {
+            throw new HttpException(404, 'Apero not found');
+        }
+
+        res.send(apero);
+    };
+
     createApero = async (req, res, next) => {
         this.checkValidation(req);
 
