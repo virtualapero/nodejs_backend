@@ -31,11 +31,11 @@ class AperoModel {
         return result[0];
     }
 
-    create = async ({ apero_date }) => {
+    create = async ({ apero_date, image }) => {
         const sql = `INSERT INTO ${this.tableName}
-        (apero_date) VALUES (UNIX_TIMESTAMP(?))`;
+        (apero_date, image) VALUES (UNIX_TIMESTAMP(?), ?)`;
 
-        const result = await query(sql, [apero_date]);
+        const result = await query(sql, [apero_date, image]);
         const affectedRows = result ? result.affectedRows : 0;
 
         return affectedRows;
