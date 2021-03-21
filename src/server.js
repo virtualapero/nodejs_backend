@@ -5,6 +5,7 @@ const HttpException = require('./utils/HttpException.utils');
 const errorMiddleware = require('./middleware/error.middleware');
 const userRouter = require('./routes/user.route');
 const aperoRouter = require('./routes/apero.route');
+const aperoTopicRouter = require('./routes/aperotopic.route');
 
 // Init express
 const app = express();
@@ -22,6 +23,7 @@ const port = Number(process.env.PORT || 3331);
 
 app.use(`/api/v1/users`, userRouter);
 app.use(`/api/v1/aperos`, aperoRouter);
+app.use(`/api/v1/aperotopics`, aperoTopicRouter);
 
 
 // 404 error

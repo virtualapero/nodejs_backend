@@ -4,32 +4,38 @@ const { multipleTsColumnSet } = require('../utils/unixts.utils');
 
 class AperoModel {
     tableName = 'apero';
+    tableNameSecond = 'apero_topic';
 
     find = async (params = {}) => {
         
-        let sql = `SELECT * FROM ${this.tableName}`;
+        let sql = `SELECT ${this.tableNameSecond}.aperoId, ${this.tableName}.apero_date, ${this.tableName}.image, ${this.tableNameSecond}.id as topicId, ${this.tableNameSecond}.name, ${this.tableNameSecond}.description FROM ${this.tableName}, ${this.tableNameSecond} WHERE ${this.tableNameSecond}.aperoId = ${this.tableName}.id`;
 
         if (!Object.keys(params).length) {
             return await query(sql);
         }
 
         const { columnSet, values } = multipleColumnSet(params)
-        sql += ` WHERE ${columnSet}`;
+        sql += ` AND ${this.tableName}.${columnSet}`;
+        console.log(sql);
 
         return await query(sql, [...values]);
+
     }
 
     findOne = async (params) => {
         const { columnSet, values } = multipleColumnSet(params)
 
-        const sql = `SELECT * FROM ${this.tableName}
-        WHERE ${columnSet}`;
+        const sql = `SELECT ${this.tableName}.id as aperoId, ${this.tableName}.apero_date, ${this.tableName}.image, ${this.tableNameSecond}.id as topicId, ${this.tableNameSecond}.name, ${this.tableNameSecond}.description  FROM ${this.tableName}, ${this.tableNameSecond} 
+        WHERE ${this.tableNameSecond}.aperoId = ${this.tableName}.id AND ${this.tableName}.${columnSet} ORDER BY aperoId ASC`;
+        console.log(sql);
 
         const result = await query(sql, [...values]);
+        
 
         // return back the first row (user)
         return result[0];
     }
+
 
     create = async ({ apero_date, image }) => {
         const sql = `INSERT INTO ${this.tableName}

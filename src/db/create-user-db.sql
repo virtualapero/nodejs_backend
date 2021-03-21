@@ -17,5 +17,14 @@ CREATE TABLE IF NOT EXISTS user
 CREATE TABLE IF NOT EXISTS apero 
 ( 
     id             INT PRIMARY KEY auto_increment, 
-    apero_date     INT(11) UNIQUE NOT NULL
+    apero_date     INT(11) UNIQUE NOT NULL,
+    image          VARCHAR(50) UNIQUE
+); 
+
+CREATE TABLE IF NOT EXISTS apero_topic 
+( 
+    id             INT PRIMARY KEY auto_increment, 
+    name           VARCHAR(255) NOT NULL,
+    aperoId        INT(11) NOT NULL,
+    description    MEDIUMTEXT NOT NULL
 ); 
